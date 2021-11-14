@@ -10,6 +10,7 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/vSterlin/casino/internal/config"
 	"github.com/vSterlin/casino/internal/server"
+	"github.com/vSterlin/casino/internal/slots"
 )
 
 func main() {
@@ -28,6 +29,9 @@ func main() {
 	if err != nil {
 		log.Fatalln("please provide a valid PORT number")
 	}
+
+	ss := &slots.SlotService{}
+	ss.Play()
 
 	s := server.NewServer(port, db)
 	s.Init()
