@@ -8,6 +8,7 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github.com/vSterlin/casino/internal/slots"
 )
 
 type Server struct {
@@ -26,10 +27,11 @@ func (s *Server) Init() {
 
 	r.Use(middleware.Logger)
 
+	ss := slots.NewSlotService()
+	sc := slots.NewSlotController(ss)
+
 	r.Route("/games", func(r chi.Router) {
-		r.Get("/", func(rw http.ResponseWriter, r *http.Request) {
-			rw.Write([]byte("test"))
-		})
+		r.Post("/slots", sc.Play)
 	})
 
 	fmt.Printf("Listening on port %s\n", s.addr)

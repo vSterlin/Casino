@@ -1,18 +1,21 @@
 package slots
 
 import (
-	"fmt"
 	"math/rand"
 	"time"
 )
 
 type SlotService struct{}
 
-func (ss *SlotService) Play() {
+func NewSlotService() *SlotService {
+	return &SlotService{}
+}
+
+func (ss *SlotService) Play() []int {
 	s := NewSlot()
 	rand.Seed(time.Now().UnixNano())
 	for i, _ := range s.Reels {
 		s.Reels[i] = rand.Intn(10)
 	}
-	fmt.Println(s.Reels)
+	return s.Reels
 }
